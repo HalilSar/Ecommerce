@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-3">
+            <img class="card-img" src="{{ product.image }}" alt="">
+        </div>
+        <div class="col-md-9">
+            <h1>{{ product.productname }}</h1>
+            <hr>
+            <p>
+                {{ product.description }}
+            </p>
+            <p>
+                {{ product.fiyat }}
+            </p>
+        </div>
+    </div>
+{% endblock %}

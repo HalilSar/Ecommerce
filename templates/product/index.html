@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Fluid jumbotron</h1>
+        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+    </div>
+</div>
+
+
+
+<header class=" navbar navbar-expand-sm bg-dark navbar-dark opacity-0div" role="navigation">
+    
+    <div class="container">
+        {% for category in categories %}
+        <ul class="nav navbar-nav mr-auto ">
+            <li class="nav-item"><a class="nav-link" href="{% url 'category' category.id %}">{{category.categoryname}}</a></li>
+        </ul>
+          {% endfor %}
+      
+    </div>
+</header>
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        {% if products %}
+        {% for product in products %}
+        <div class="card mb-3">
+            <div class="row">
+                <div class="col-md-3">
+                    <img class="card-img" src={{ product.image }} alt="">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <div class="card-title">  <a href="{% url 'detail' product.id %}">{{ product.productname }} </a></div>
+                        <p class="card-text">
+                            {{ product.description }}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">{{ product.created_date | timesince }}</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        {% endfor %}
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if products.has_previous %}
+                            <a href="?page={{ products.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ products.number }} of {{ products.paginator.num_pages }}.
+                        </span>
+
+                        {% if products.has_next %}
+                            <a href="?page={{ products.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-warning">
+            <p>
+                No Movies
+            </p>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
