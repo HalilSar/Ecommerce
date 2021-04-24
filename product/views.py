@@ -36,8 +36,11 @@ def GetById(request,product_id):
 
 def GetByCategoryId(request,category_id):
     
-    products =Product.objects.filter(category_id=category_id)
+    product_list =Product.objects.filter(category_id=category_id)
     categories =Category.objects.all()
+    paginator = Paginator(product_list, 3)
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
     context = {
         'products': products,
         'categories' : categories
