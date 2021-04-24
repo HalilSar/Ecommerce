@@ -26,17 +26,21 @@ def index(request):
 def getAll(request): pass
 def GetById(request,product_id):
     product = get_object_or_404(Product, pk = product_id)
+    categories =Category.objects.all()
     context = {
-        'product': product
+        'product': product,
+        'categories' : categories
+         
     }
     return render(request, 'product/detail.html', context)
 
 def GetByCategoryId(request,category_id):
     
     products =Product.objects.filter(category_id=category_id)
+    categories =Category.objects.all()
     context = {
         'products': products,
-        
+        'categories' : categories
     }
     return render(request, 'product/category.html', context)
 def GetAll(request): pass

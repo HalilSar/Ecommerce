@@ -12,6 +12,17 @@
 <body class="container px-2">
 
     {% include 'partials/_navbar.html' %}
+    <header class=" navbar navbar-expand-sm bg-secondary navbar-dark opacity-0div" role="navigation">
+    
+        <div class="container">
+            {% for category in categories %}
+            <ul class="nav navbar-nav mr-auto ">
+                <li class="nav-item"><a class="nav-link" href="{% url 'category' category.id %}">{{category.categoryname}}</a></li>
+            </ul>
+              {% endfor %}
+          
+        </div>
+    </header>
     
     <main>
         {% include 'partials/_alert.html' %}
