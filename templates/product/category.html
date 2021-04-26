@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-md-9">
                     <div class="card-body">
-                        <div class="card-title"> {{ product.productname }} </div>
+                        <div class="card-title"> <a href="{% url 'detail' product.id %}">{{ product.productname }} </a></div>
                         <p class="card-text">
                             {{ product.description }}
                         </p>
