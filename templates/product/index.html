@@ -1,6 +1,10 @@
 {% extends 'layout.html' %}
 {% load static  %}
-
+{% block title %} {{ settings.title }} {% endblock %}
+{% block description %} {{ settings.description }} {% endblock %}
+{% block keywords %} {{ settings.keywords }} {% endblock %}
+{% block favicon %}<link rel="shortcut icon" href="{{settings.icon.url}}"/>{% endblock %}
+{% block footer %} {% include 'partials/_footer.html' %}{% endblock %}
 {% block content %}
 
 <section id="title" class="container-fluid wow fadeInDown">
@@ -40,17 +44,30 @@
 
                     </form>
                 </div>
-
+              
 
                 <div class="widget">
                     <h4>CATEGORIES</h4>
-                    {% for category in categories %}
+                    {% load mptt_tags %}
                     <ul class="list-unstyled link-list">
-                        <li><i class="fa fa-angle-right fa-fw" aria-hidden="true"></i> <a href="{% url 'category' category.id %}">{{category.categoryname}}<span
+                        {% recursetree categories %}
+                           <li><i class="fa fa-angle-right fa-fw" aria-hidden="true"></i> <a href="{% url 'category' node.id %}">
+                                {{ node.title }}</a>
+                                {% if not node.is_leaf_node %}
+                                    <ul>
+                                         <a href="{% url 'category' node.id %}">{{ children }}</a>
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endrecursetree %}
+                    </ul>
+                    <!-- {% for category in categories %}
+                    <ul class="list-unstyled link-list">
+                        <li><i class="fa fa-angle-right fa-fw" aria-hidden="true"></i> <a href="{% url 'category' category.id %}">{{category.title}}<span
                                     class="pull-right">(5)</span></a></li>
                                     
-                    </ul>
-                    {% endfor %}
+                    </ul> 
+                    {% endfor %} -->
                 </div>
 
                 <div class="widget">
