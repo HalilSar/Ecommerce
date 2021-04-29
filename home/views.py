@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponseRedirect
 from .models import Setting,ContactForm,ContactFormMessage
-from product.models import Product 
+from product.models import Product
 def Index(request):
     settings=Setting.objects.get(id=1)
     sliderdata = Product.objects.all()[:4]
@@ -38,4 +38,5 @@ def contact(request):
         form = ContactForm
         settings=Setting.objects.get(id=1)
         context={'settings':settings,'form':form  }
-        return render(request, 'home/contact.html', context)        
+        return render(request, 'home/contact.html', context)   
+
