@@ -71,17 +71,30 @@
                         </ul>
                     </li>
 
-                    <li><a href="shop-cart.html"><i class="fa fa-shopping-cart fa-fw"></i> Sepet (2)</a></li>
+                    <li><a href="{% url 'shopcart' %}"><i class="fa fa-shopping-cart fa-fw"></i> 
+                        {%if request.session.cart_items == 0 %}
+                            Sepet 
+                        {% else %}
+                            Sepet ({{request.session.cart_items}})
+                        {%endif%}
+                    </a></li>
 
                     {% if user.is_authenticated %}
+                    <img
+                            src="{{ user.image.url }"
+                            class="rounded-circle z-depth-0 mt-1"
+                            alt="avatar image"
+                            height="35"
+                        />
                     <li class="nav-item">
-                        <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">({{
-                            user.username
-                            }}) Çıkış</a>
-                        <form action="{% url 'logout' %}" method="POST" id="logout">
-                            {%csrf_token%}
-                            <input type="hidden">
-                        </form>
+                        
+                        <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">({{ user.username }}) 
+                             Çıkış</a>
+                    <form action="{% url 'logout' %}" method="POST" id="logout">
+                        {%csrf_token%}
+                        <input type="hidden">  
+                    </form>
+                           
                     </li>
                     {% else %}
                     <li {% if 'login' in request.path %} class="nav-item active" {% else %} class="nav-item" {%endif %}>
@@ -90,7 +103,7 @@
                     </li>
                     <li {% if 'register' in request.path %} class="nav-item active" {% else %} class="nav-item" {%endif %}>
                         
-                        <a href="{% url 'register' %}" class="nav-link">Kayıt</a>
+                        <a href="#" class="nav-link">Kayıt</a>
 
                     {% endif %}
                 </ul>

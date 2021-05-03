@@ -41,7 +41,7 @@
                     <form action="/search/" class="form-inline" method="POST" >
                         {%csrf_token%}
                         <div class="input-group">
-                            <input  type="text" name="query" class="form-control input-lg" placeholder="Arama Yapın">
+                            <input  type="text" class="form-control input-lg" placeholder="Arama Yapın">
                             <span class="input-group-btn">
                                 <button class="btn btn-default btn-lg" type="submit"><i class="fa fa-search"></i></button>
                             </span>
@@ -167,18 +167,115 @@
                                     <img alt="" class="img-responsive" src="{{ product.image.url }}">
                                     <div class="mask"></div>
                                     <ul class="list-unstyled list-inline">
-                                        <li><a href="{% url 'detail' product.id/product.slug %}"><i class="fa fa-link fa-fw"></i></a></li>
-                                        <li><a href="{% url 'addtocart' product.id  %}"><i class="fa fa-cart-plus fa-fw"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-cart-plus fa-fw"></i></a></li>
                                     </ul>
                                 </div>
                                 <div class="product-item-inner">
-                                    <h3 class="product-title"><a href="/order/addtocart/{{product.id}}">{{ product.title }}</a></h3>
+                                    <h3 class="product-title"><a href="#">{{ product.title }}</a></h3>
                                     <p class="product-price">{{product.price}}</p>
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
                     {% endif %}
+
+
+
+ 
+
+                    <div class="col-md-4 wow fadeInUp">
+                        <div class="text-center product-item">
+                            <div class="product-item-top">
+                                <img alt="" class="img-responsive" src="images/products/product4_thumb.jpg">
+                                <div class="mask"></div>
+                                <ul class="list-unstyled list-inline">
+                                    <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-cart-plus fa-fw"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product-item-inner">
+                                <h3 class="product-title"><a href="#">Hand Bag</a></h3>
+                                <p class="product-price">$125</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 wow fadeInUp">
+                        <div class="text-center product-item">
+                            <div class="product-item-top">
+                                <img alt="" class="img-responsive" src="images/products/product1_thumb.jpg">
+                                <div class="mask"></div>
+                                <ul class="list-unstyled list-inline">
+                                    <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-cart-plus fa-fw"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product-item-inner">
+                                <h3 class="product-title"><a href="#">Photo Camera</a></h3>
+                                <p class="product-price">$153</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 wow fadeInUp">
+                        <div class="text-center product-item">
+                            <div class="product-item-top">
+                                <img alt="" class="img-responsive" src="images/products/product2_thumb.jpg">
+                                <div class="mask"></div>
+                                <ul class="list-unstyled list-inline">
+                                    <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-cart-plus fa-fw"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product-item-inner">
+                                <h3 class="product-title"><a href="#">Wood Chair</a></h3>
+                                <p class="product-price">$59</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 wow fadeInUp">
+                        <div class="text-center product-item">
+                            <div class="product-item-top">
+                                <img alt="" class="img-responsive" src="images/products/product3_thumb.jpg">
+                                <div class="mask"></div>
+                                <ul class="list-unstyled list-inline">
+                                    <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-cart-plus fa-fw"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product-item-inner">
+                                <h3 class="product-title"><a href="#">Hand Bag</a></h3>
+                                <p class="product-price">$129</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4 wow fadeInUp">
+                        <div class="text-center product-item">
+                            <div class="product-item-top">
+                                <img alt="" class="img-responsive" src="images/products/product4_thumb.jpg">
+                                <div class="mask"></div>
+                                <ul class="list-unstyled list-inline">
+                                    <li><a href="#"><i class="fa fa-link fa-fw"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-cart-plus fa-fw"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product-item-inner">
+                                <h3 class="product-title"><a href="#">Wood Chair</a></h3>
+                                <p class="product-price">$119</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
                     <div class="col-md-12 wow fadeIn">
                         <div id="pagination" class="row text-center">
                             <nav aria-label="Page navigation">
@@ -226,14 +323,3 @@
 
 </div>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-   
-
