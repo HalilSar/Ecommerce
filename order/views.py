@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
-from .models import ShopCart,ShopCartForm,OrderForm
+from .models import ShopCart,ShopCartForm,OrderForm,Order,OrderProduct
 from home.models import UserProfile,Setting
+from product.models import Product
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.crypto import get_random_string
 # Create your views here.
 def index(request):
     return HttpResponse('Order App')
@@ -55,6 +57,7 @@ def addtocart(request,id):
     return HttpResponseRedirect(url)           
 @login_required(login_url='/login') 
 def deletetocart(request,id):
+    current_user = request.user
     ShopCart.objects.filter(id=id).delete()
     request.session['cart_items'] = ShopCart.objects.filter(user_id= current_user.id).count()
     return HttpResponseRedirect("/order/shopcart")
@@ -74,11 +77,11 @@ def shopcart(request):
 
 @login_required(login_url='/login')
 def orderproduct(request):
-    current_user = request.user
-    shopcart = ShopCart.objects.filter(user_id=current_user.id)
-    total = 0
-    for rs in shopcart:
-        total += rs.product.price * rs.quantity
+    current_user = request.user # Talebin User Nesnesini current_userda tuttuk 
+    shopcart = ShopCart.objects.filter(user_id=current_user.id) # Gelen current_user.id yi user_id ye aldık
+    total = 0  
+    for rs in shopcart:   
+        total += rs.product.price * rs.quantity # total fiyat hesabı yapıldı
 
     if request.method == 'POST':  # Eğer Formdan Gönderildi ise Oldu İse
         form = OrderForm(request.POST)
@@ -107,18 +110,18 @@ def orderproduct(request):
                 detail.product_id   = rs.product_id
                 detail.user_id      = current_user.id
                 detail.quantity     = rs.quantity
-                ## Reduce quantity of sold product from Amount of Product
-                product = Product.objects.get(id=rs.product_id)
-                product.amount -= rs.quantity
-                product.save()
-                #*************<>***************#
                 detail.price    = rs.product.price
                 detail.amount   = rs.amount         
                 detail.save()
+                ## Reduce quantity of sold product from Amount of Product  Stocktan Düşme
+                product = Product.objects.get(id=rs.product_id)
+                product.amount -= rs.quantity
+                product.save() # ürün sayısı kaydedildi.
+                #*************<>***************#
 
 
-            ShopCart.objects.filter(user_id=current_user.id).delete() # Clear & Delete shopcart
-            request.session['cart_items']=0
+            ShopCart.objects.filter(user_id=current_user.id).delete() # Sepeti Temizle
+            request.session['cart_items']=0  # Ürün Sayısını Sıfırla
             # messages.success(request, "Your Order has been completed. Thank you ")
             return render(request, 'order/order_completed.html',{'ordercode':ordercode})
         else:
@@ -130,7 +133,7 @@ def orderproduct(request):
     settings = Setting.objects.get(pk=1)
     profile = UserProfile.objects.get(user_id=current_user.id)
     context = {
-                'settings':settings,
+               'settings':settings,
                 'shopcart': shopcart,
                'total': total,
                'form': form,

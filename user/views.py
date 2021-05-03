@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User as user
+
 from django.contrib import auth
 from django.contrib import messages
 from home.models import UserProfile,Setting
@@ -13,6 +14,7 @@ def index(request):
     context = {
                'settings':settings,
                'profile':profile,
+
                
                }
     return render(request,'user/user_profile.html',context)

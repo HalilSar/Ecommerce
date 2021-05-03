@@ -3,7 +3,7 @@ from .models import Setting,ContactForm,ContactFormMessage,UserProfile
 from product.models import Product
 from django.contrib.auth.models import User
 from django.contrib import auth
-from django.contrib.auth import logout
+from django.contrib.auth import logout,authenticate,login
 from .form import SignUpForm
 from django.http import HttpResponse,HttpResponseRedirect
 from order.models import ShopCart
@@ -49,7 +49,7 @@ def contact(request):
         context={'settings':settings,'form':form  }
         return render(request, 'home/contact.html', context)   
 
-def login(request):
+def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password  = request.POST['password']
@@ -76,13 +76,19 @@ def signup_view(request):
         form = SignUpForm(request.POST)
         if form.is_valid():           
             form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
             current_user =request.user
             # return HttpResponse("Üye Kaydedildi.")
             data=UserProfile()
             data.user_id=current_user.id
             data.image="image/users/admin.png"
             data.save()
-            return redirect('login')
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponse(form.errors)
     form = SignUpForm()
     settings=Setting.objects.get(id=1)
     context={'settings':settings, 'form': form }

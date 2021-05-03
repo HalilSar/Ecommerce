@@ -79,8 +79,11 @@ class UserProfile(models.Model):
     image = models.ImageField(blank=True, upload_to='images/users/')
 
     # User bilgisini admin gösterme
-    def user_name(self):
+    def __str__(self):
         return self.user.username
+    
+    def user_name(self):
+        return self.user.first_name +' ' + self.user.last_name
     
     def image_tag(self):
         return mark_safe(f'<img src="{self.image.url}" height="50"/>')
